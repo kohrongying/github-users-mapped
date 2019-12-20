@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grommet, WorldMap, Select, Box, Image, Main, Layer, Button, Grid, Heading, Text, Anchor } from 'grommet';
+import { Grommet, WorldMap, Select, Main, Heading, Text, Anchor } from 'grommet';
 import COUNTRIES from "../constants/countries.json";
 import axios from "axios";
+import Popup from "./Popup";
 
 const theme = {
   global: {
@@ -34,7 +35,6 @@ function App() {
   }
 
   const onSearch = (searchText) => {
-    console.log('searching', searchText)
     const regexp = new RegExp(searchText, 'i');
     setCountries(COUNTRIES.filter(o => o.name.match(regexp)));
   }
@@ -44,7 +44,7 @@ function App() {
       <Main pad={"medium"}>
         <Heading level={2} textAlign="center">Find Github Users</Heading>
         <WorldMap
-          color="light-3"
+          color={location ? "light-6" : "dark-6"}
           fill="horizontal"
           places={location ? [
             {
@@ -68,41 +68,14 @@ function App() {
         />
 
         {show && (
-          <Layer
-            overflow={"scroll"}
-            onEsc={() => setShow(false)}
-            onClickOutside={() => setShow(false)}
-          >
-            <Main width="large" overflow={"scroll"}>
-              <Box margin={"medium"} align="center" alignContent="center" alignSelf="center" justify="center">
-                <h1>{numUsers.toLocaleString()}</h1>
-                <div>
-                  Total Github Users in {location.name}
-                </div>
-              </Box>
-              <Grid
-                columns={["1/2", "1/2"]}
-                margin="small"
-              >
-                {users.map(user => (
-                  <Box key={user.id} direction="row" elevation="small" margin="small">
-                    <Box width="xxsmall" height="xxsmall">
-                      <Image
-                        fit="contain"
-                        src={user.avatar_url}
-                      />
-                    </Box>
-                    <Box justify="center" pad="small">
-                      {user.login}
-                    </Box>
-                  </Box>
-                ))}
-
-              </Grid>
-              <Button margin="small" label="close" onClick={() => setShow(false)} />
-            </Main>
-        </Layer>
+          <Popup
+            users={users}
+            numUsers={numUsers}
+            setShow={setShow}
+            locationName={location.name}
+          />
         )}
+
         <Text textAlign="center" margin="large">
           {`Built by `}
           <Anchor href="https://rongying.co" label="Rong Ying" />
