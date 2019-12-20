@@ -1,6 +1,6 @@
 {
-  "short_name": "Github Global",
-  "name": "Github Users Mapper",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
