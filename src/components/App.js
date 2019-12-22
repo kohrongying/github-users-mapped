@@ -42,7 +42,26 @@ function App() {
   return (
     <Grommet theme={theme}>
       <Main pad={"medium"}>
-        <Heading level={2} textAlign="center">Find Github Users</Heading>
+        <Heading 
+          level={2}
+          textAlign="center"
+          alignSelf="center"
+        >
+          Find Github Users
+        </Heading>
+
+        <Select
+          options={countries}
+          placeholder={"Choose a country"}
+          value={location}
+          labelKey={"name"}
+          valueKey={"latlng"}
+          onChange={onChange}
+          onSearch={onSearch}
+          dropHeight={"medium"}
+          margin={"small"}
+        />
+
         <WorldMap
           color={location ? "light-6" : "dark-6"}
           fill="horizontal"
@@ -54,17 +73,6 @@ function App() {
               onClick: () => setShow(true)
             }
           ] : []}
-        />
-
-        <Select
-          options={countries}
-          placeholder={"Choose a country"}
-          value={location}
-          labelKey={"name"}
-          valueKey={"latlng"}
-          onChange={onChange}
-          onSearch={onSearch}
-          dropHeight={"medium"}
         />
 
         {show && (
